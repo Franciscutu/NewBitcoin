@@ -4,19 +4,21 @@ Newbitcoin integration/staging tree
 http://www.newbitcoin.org
 
 Copyright (c) 2009-2014 Bitcoin Developers
-Copyright (c) 2011-2014 Newbitcoin Developers
+Copyright (c) 2011-2024 LiteCiun Developers
+Copyright (c) 2024-2024 NewBitcoin Developers
+
 
 What is Newbitcoin?
 ----------------
 
 Newbitcoin is a lite version of Bitcoin using scrypt as a proof-of-work algorithm.
- - 2.5 minute block targets
+ - 5 minute block targets
  - subsidy halves in 840k blocks (~4 years)
- - ~84 million total coins
+ - 21 million total coins
 
 The rest is the same as Bitcoin.
  - 50 coins per block
- - 2016 blocks to retarget difficulty
+ - 2028 blocks to retarget difficulty
 
 For more information, as well as an immediately useable, binary version of
 the Newbitcoin client sofware, see http://www.newbitcoin.org.
