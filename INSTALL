@@ -1,0 +1,9 @@
+Building Newbitcoin
+
+See doc/readme-qt.rst for instructions on building Newbitcoin-Qt,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of Newbitcoin.
+
+See doc/build-*.txt for instructions on building newbitcoind,
+the intended-for-services, no-graphical-interface, reference
+implementation of Newbitcoin.
