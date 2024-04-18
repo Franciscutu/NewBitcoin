@@ -1,0 +1,235 @@
+
+
+User
+sudo apt-get update
+sudo apt-get install build-essential gcc make peri dkms
+
+reboot
+
+sudo apt-get install git
+
+sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils
+
+sudo apt-get install libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-progran-options-dev libboost-test-dev libboost-thread-dev
+
+sudo apt-get install libboost-all-dev
+
+sudo apt-get install software-properties-conmon
+
+sudo add-apt-repository ppa:bitcoin/bitcoin
+
+sudo apt-get update
+
+sudo apt-get install libdb4.8-dev libdb4.8++-dev
+
+sudo apt-get install libminiupnpc-dev
+
+sudo apt-get install libzmq3-dev
+
+sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler
+
+sudo apt-get install libqt4-dev libprotobuf-dev protobuf-compiler
+
+sudo apt-get install openssl1.0
+
+sudo apt-get install openssl1.0-dev
+
+git clone -b 0.8 https://github.com/litecoin-project/litecoin.git
+
+
+
+find . -type f -print0 | xargs -0 sed -i 's/litecoin/newbitcoin/g'
+find . -type f -print0 | xargs -0 sed -i 's/Litecoin/Newbitcoin/g'
+find . -type f -print0 | xargs -0 sed -i 's/LiteCoin/NewBitcoin/g'
+find . -type f -print0 | xargs -0 sed -i 's/LITECOIN/NEWBITCOIN/g'
+find . -type f -print0 | xargs -0 sed -i 's/LTC/NBTC/g'
+
+make -f makefile.unix
+
+find . -type f -print0 | xargs -0 sed -i 's/9333/6333/g'
+find . -type f -print0 | xargs -0 sed -i 's/9332/6332/g'
+ 
+openssl ecparam -genkey -name secp256k1 -out alertkey.pem
+openssl ec -in alertkey.pem -text > alertkey.hex
+openssl ecparam -genkey -name secp256k1 -out testnetalert.pem
+openssl ec -in testnetalert.pem -text > testnetalert.hex
+openssl ecparam -genkey -name secp256k1 -out genesiscoinbase.pem
+openssl ec -in testnetalert.pem -text > genesiscoinbase.hex
+
+-------    cat alertkey.hex
+
+Private-Key: (256 bit) main
+priv:
+    97:91:50:87:0e:66:d8:cd:9b:1e:ca:cf:c2:24:ac:
+    bb:fb:b4:5d:1b:6d:e9:33:6b:aa:40:ff:aa:58:09:
+    cc:05
+pub:main
+    04964338bdc29ed4ef623a5f68009dc95eaeaa3bcbb78eb1ee6fc37bb04d487ee6910a5169eba226780e332a8e74326eceb920fa3dcfbc9d192593ae22e3f97640
+
+--------   cat testnetalert.hex
+
+Private-Key: (256 bit) testnet
+priv:
+    ca:88:4d:d9:cc:4a:fc:93:0f:5b:37:a5:ff:14:7e:
+    36:b0:5e:10:9a:27:0a:ee:b1:e2:6d:d5:8c:a1:f2:
+    0f:05
+pub:
+    047a2739b783b89d62e11d3d8ec15ad155bc19c10aece914a6b7571d2ab326131b2e0e1dd96a14ca34470c8e0c7586ce844237fec72cf8bf17080bcf5932a391ea
+
+boss@linux:~/Bureau/NewBitcoin$ cat genesiscoinbase.hex
+Private-Key: (256 bit)
+priv:
+    ca:88:4d:d9:cc:4a:fc:93:0f:5b:37:a5:ff:14:7e:
+    36:b0:5e:10:9a:27:0a:ee:b1:e2:6d:d5:8c:a1:f2:
+    0f:05
+pub:
+    047a2739b783b89d62e11d3d8ec15ad155bc19c10aece914a6b7571d2ab326131b2e0e1dd96a14ca34470c8e0c7586ce844237fec72cf8bf17080bcf5932a391ea
+
+modification 
+	pchMessageStart[0] = 0xfb;
+        pchMessageStart[1] = 0xc5;
+        pchMessageStart[2] = 0xb7;
+        pchMessageStart[3] = 0xdf;
+
+
+date +%s      timpul in secunde
+
+make -f makefile.unix
+
+./newbitcoind
+
+
+qmake 
+
+make
+
+./newbitcoind-qt
+
+
+if (false && block.GetHash() != hashGenesisBlock)
+        {
+            printf("Searching for genesis block...\n");
+            // This will figure out a valid hash and Nonce if you're
+            // creating a different genesis block:
+            uint256 hashTarget = CBigNum().SetCompact(block.nBits).getuint256();
+            uint256 thash;
+            char scratchpad[SCRYPT_SCRATCHPAD_SIZE];
+ 
+            loop
+            {
+#if defined(USE_SSE2)
+                // Detection would work, but in cases where we KNOW it always has SSE2,
+                // it is faster to use directly than to use a function pointer or conditional.
+#if defined(_M_X64) || defined(__x86_64__) || defined(_M_AMD64) || (defined(MAC_OSX) && defined(__i386__))
+                // Always SSE2: x86_64 or Intel MacOS X
+                scrypt_1024_1_1_256_sp_sse2(BEGIN(block.nVersion), BEGIN(thash), scratchpad);
+#else
+                // Detect SSE2: 32bit x86 Linux or Windows
+                scrypt_1024_1_1_256_sp(BEGIN(block.nVersion), BEGIN(thash), scratchpad);
+#endif
+#else
+                // Generic scrypt
+                scrypt_1024_1_1_256_sp_generic(BEGIN(block.nVersion), BEGIN(thash), scratchpad);
+#endif
+                if (thash <= hashTarget)
+                    break;
+                if ((block.nNonce & 0xFFF) == 0)
+                {
+                    printf("nonce %08X: hash = %s (target = %s)\n", block.nNonce, thash.ToString().c_str(), hashTarget.ToString().c_str());
+                }
+                ++block.nNonce;
+                if (block.nNonce == 0)
+                {
+                    printf("NONCE WRAPPED, incrementing time\n");
+                    ++block.nTime;
+                }
+            }
+            printf("block.nTime = %u \n", block.nTime);
+            printf("block.nNonce = %u \n", block.nNonce);
+            printf("block.GetHash = %s\n", block.GetHash().ToString().c_str());
+        }
+
+
+Options :
+  -?                     Ce message d'aide
+  -conf=<file>           Spécifier le fichier de configuration (par défaut : newbitcoin.conf)
+  -pid=<file>            Spécifier le fichier PID (par défaut : newbitcoind.pid)
+  -gen                   Générer des pièces (défaut: 0)
+  -datadir=<dir>         Spécifier le répertoire de données
+  -dbcache=<n>           Définir la taille du tampon en mégaoctets (par défaut : 25)
+  -timeout=<n>           Spécifier le délai d'expiration de la connexion en millisecondes (par défaut : 5000)
+  -proxy=<ip:port>       Connexion via un proxy socks
+  -socks=<n>             Sélectionner la version du proxy socks à utiliser (4-5, 5 étant la valeur par défaut)
+  -tor=<ip:port>         Utiliser un proxy pour atteindre les services cachés de Tor (par défaut : même valeur que -proxy)
+  -dns                   Autoriser les recherches DNS pour -addnode, -seednode et -connect
+  -port=<port>           Écouter les connexions sur le <port> (par défaut : 6333 ou testnet : 16333)
+  -maxconnections=<n>    Garder au plus <n> connexions avec les pairs (par défaut : 125)
+  -addnode=<ip>          Ajouter un nœud auquel se connecter et tenter de garder la connexion ouverte
+  -connect=<ip>          Ne se connecter qu'au(x) nœud(s) spécifié(s)
+  -seednode=<ip>         Se connecter à un nœud pour obtenir des adresses de pairs puis se déconnecter
+  -externalip=<ip>       Spécifier votre propre adresse publique
+  -onlynet=<net>         Se connecter uniquement aux nœuds du réseau <net> (IPv4, IPv6 ou Tor)
+  -discover              Découvrir sa propre adresse IP (par défaut : 1 lors de l'écoute et si -externalip n'est pas présent)
+  -checkpoints           N'accepter que la chaîne de blocs correspondant aux points de vérification internes (par défaut : 1)
+  -listen                Accepter les connexions entrantes (par défaut : 1 si -proxy ou -connect ne sont pas présents)
+  -bind=<addr>           Se lier à l'adresse donnée et toujours l'écouter. Utilisez la notation [host]:port pour l'IPv6
+  -dnsseed               Trouver des pairs en utilisant la recherche DNS (par défaut : 1 sauf si -connect est utilisé)
+  -banscore=<n>          Seuil de déconnexion des pairs de mauvaise qualité (par défaut : 100)
+  -bantime=<n>           Délai en secondes de refus de reconnexion aux pairs de mauvaise qualité (par défaut : 86400)
+  -maxreceivebuffer=<n>  Tampon maximal de réception par -connection, <n>*1000 octets (par défaut : 5000)
+  -maxsendbuffer=<n>     Tampon maximal d'envoi par connexion, <n>*1000 octets (par défaut : 1000)
+  -bloomfilters          Allow peers to set bloom filters (default: 1)
+  -upnp                  Utiliser l'UPnP pour rediriger le port d'écoute (par défaut : 1 lors de l'écoute)
+  -paytxfee=<amt>        Frais par Ko à ajouter aux transactions que vous enverrez
+  -mininput=<amt>        When creating transactions, ignore inputs with value less than this (default: 0.0001)
+  -server                Accepter les commandes de JSON-RPC et de la ligne de commande
+  -testnet               Utiliser le réseau de test
+  -debug                 Afficher des information de débogage supplémentaires. Cela signifie toutes les autres options -debug*
+  -debugnet              Afficher des informations de débogage réseau supplémentaires
+  -logtimestamps         Prepend debug output with timestamp (default: 1)
+  -shrinkdebugfile       Réduire le fichier debug.log lors du démarrage du client (par défaut : 1 lorsque -debug n'est pas présent)
+  -printtoconsole        Envoyer les informations de débogage/trace à la console au lieu du fichier debug.log
+  -rpcuser=<user>        Nom d'utilisateur pour les connexions JSON-RPC
+  -rpcpassword=<pw>      Mot de passe pour les connexions JSON-RPC
+  -rpcport=<port>        Écouter les connexions JSON-RPC sur le <port> (par défaut : 6332 ou tesnet : 16332)
+  -rpcallowip=<ip>       Autoriser les connexions JSON-RPC depuis l'adresse IP spécifiée
+  -rpcthreads=<n>        Définir le nombre d'exétrons pour desservir les appels RPC (par défaut : 4)
+  -blocknotify=<cmd>     Exécuter la commande lorsque le meilleur bloc change (%s est remplacé par le hachage du bloc dans cmd)
+  -walletnotify=<cmd>    Exécuter la commande lorsqu'une transaction de porte-monnaie change (%s dans la commande est remplacée par TxID)
+  -spendzeroconfchange   Spend unconfirmed change when sending transactions (default: 1)
+  -alertnotify=<cmd>     Exécuter une commande lorsqu'une alerte correspondante est reçue (%s dans la commande sera remplacé par le message)
+  -upgradewallet         Mettre à jour le format du porte-monnaie
+  -keypool=<n>           Régler la taille de la plage de clefs sur <n> (par défaut : 100)
+  -rescan                Réanalyser la chaîne de blocs pour les transactions de porte-monnaie manquantes
+  -salvagewallet         Tenter de récupérer les clefs privées d'un wallet.dat corrompu
+  -checkblocks=<n>       Nombre de blocs à vérifier au démarrage (par défaut : 288, 0 = tout)
+  -checklevel=<n>        Niveau d'approfondissement de la vérification des blocs (0-4, par défaut : 3)
+  -txindex               Maintenir un index complet des transactions (par défaut : 0)
+  -loadblock=<file>      Importe des blocs depuis un fichier blk000??.dat externe
+  -maxorphantx=<n>       Keep at most <n> unconnectable transactions in memory (default: 25)
+  -reindex               Reconstruire l'index de la chaîne des blocs à partir des fichiers blk000??.dat actuels
+  -par=<n>               Définir le nombre de fils d’exécution pour la vérification des scripts (maximum 16, 0 = auto, < 0 = laisser ce nombre de cœurs libres, par défaut : 0)
+
+Options de création des blocs :
+  -blockminsize=<n>      Définir la taille minimale des blocs en octets (par défaut : 0)
+  -blockmaxsize=<n>      Définir la taille maximale des blocs en octets (par défaut : 250000)
+  -blockprioritysize=<n> Définir la taille maximale en octets des transactions prioritaires/à frais modiques (par défaut : 27000)
+
+Options SSL : (cf. le wiki de Newbitcoin pour les instructions de configuration du SSL)
+  -rpcssl                                  Utiliser OpenSSL (https) pour les connexions JSON-RPC
+  -rpcsslcertificatechainfile=<file.cert>  Fichier de certificat serveur (par défaut : server.cert)
+  -rpcsslprivatekeyfile=<file.pem>         Clef privée du serveur (par défaut : server.pem)
+  -rpcsslciphers=<ciphers>                 Clefs de chiffrement acceptables (par défaut : TLSv1+HIGH:!SSLv2:!aNULL:!eNULL:!AH:!3DES:@STRENGTH)
+
+Options Interface Utilisateur:
+  -lang=<lang>           Définir la langue, par exemple « de_DE » (par défaut : la langue du système)
+  -min                   Démarrer sous forme minimisée
+  -splash                Afficher l'écran d'accueil au démarrage (par défaut : 1)
+
+
+Hennessy19!!!
+
+
+
+
+
